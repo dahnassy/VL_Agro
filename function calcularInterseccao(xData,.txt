@@ -1,0 +1,33 @@
+function calcularInterseccao(xData, yData) {
+    // Verificar se as duas séries de dados têm o mesmo comprimento
+    if (xData.length !== yData.length) {
+        throw new Error("As séries de dados devem ter o mesmo comprimento.");
+    }
+
+    // Calcular a soma de x, y, x^2 e xy
+    var sumX = xData.reduce((acc, x) => acc + x, 0);
+    var sumY = yData.reduce((acc, y) => acc + y, 0);
+    var sumXSquared = xData.reduce((acc, x) => acc + Math.pow(x, 2), 0);
+    var sumXY = xData.reduce((acc, x, i) => acc + x * yData[i], 0);
+
+    // Calcular a média de x e y
+    var meanX = sumX / xData.length;
+    var meanY = sumY / yData.length;
+
+    // Calcular o coeficiente angular da linha de melhor ajuste (m)
+    var m = (sumXY - (sumX * sumY) / xData.length) / (sumXSquared - (Math.pow(sumX, 2)) / xData.length);
+
+    // Calcular o intercepto da linha de melhor ajuste (b)
+    var b = meanY - m * meanX;
+
+    // Calcular o ponto de interseção com o eixo y (quando x = 0)
+    var intersectionX = 0;
+    var intersectionY = b;
+
+    return { x: intersectionX, y: intersectionY };
+}
+
+// Exemplo de uso da função
+var xData = [0, 1, 2, 3, 4];
+var yData = [0.0, 0.327, 0.476, 0.631, 0.772];
+var interseccao = calcularInterseccao(xData, yData);
